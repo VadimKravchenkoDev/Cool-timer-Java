@@ -1,6 +1,9 @@
 package com.kravchenkovadim.cooltimerkotlin;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,5 +26,12 @@ public class MainActivity extends AppCompatActivity {
         });
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(v ->{
+            
+                    button.setText("STOP");
+                    button.setText("123");
+                });
     }
 }
