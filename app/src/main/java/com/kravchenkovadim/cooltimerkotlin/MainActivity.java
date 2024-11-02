@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
+    Boolean check = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +27,16 @@ public class MainActivity extends AppCompatActivity {
         });
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
 
+    public void onClick(View view) {
         Button button = findViewById(R.id.button);
-        button.setOnClickListener(v ->{
-            
-                    button.setText("STOP");
-                    button.setText("123");
-                });
+        if (check) {
+            button.setText("STOP");
+            check = false;
+        } else {
+            button.setText("START");
+            check = true;
+        }
     }
 }
