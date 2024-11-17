@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Cool timer Kotlin"
+rootProject.name = "Cool timer Java"
 include ':app'

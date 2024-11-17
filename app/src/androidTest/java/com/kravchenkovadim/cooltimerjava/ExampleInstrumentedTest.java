@@ -1,4 +1,4 @@
-package com.kravchenkovadim.cooltimerkotlin;
+package com.kravchenkovadim.cooltimerjava;
 
 import android.content.Context;
 

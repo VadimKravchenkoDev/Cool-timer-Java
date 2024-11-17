@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.kravchenkovadim.cooltimerkotlin'
+    namespace 'com.kravchenkovadim.cooltimerjava'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.kravchenkovadim.cooltimerkotlin"
+        applicationId "com.kravchenkovadim.cooltimerjava"
         minSdk 24
         targetSdk 34
         versionCode 1
