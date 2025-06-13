@@ -1,4 +1,4 @@
-package com.kravchenkovadim.cooltimerjava;
+package com.kravchenkovadim.cooltimerkotlin;
 
 import org.junit.Test;
 

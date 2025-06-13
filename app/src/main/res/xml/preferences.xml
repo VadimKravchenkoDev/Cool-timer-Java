@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="sound"
+        android:title="Звук"
+        android:summary="Включение/выключение звука"
+        android:defaultValue="false"/>
+
+    <ListPreference
+        android:key="melody"
+        android:title="Choose the melody!"
+        android:summary="bell"
+        android:entries="@array/theme_titles"
+        android:entryValues="@array/theme_values"
+        android:defaultValue="bell"/>
+
+</androidx.preference.PreferenceScreen>
