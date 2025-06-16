@@ -14,4 +14,12 @@
         android:entryValues="@array/theme_values"
         android:defaultValue="bell"/>
 
+    <EditTextPreference
+        android:title="Timer default interval"
+        android:key="default_interval"
+        android:defaultValue="30"
+        />
+
+    
+
 </androidx.preference.PreferenceScreen>
