@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -21,14 +22,16 @@ import androidx.preference.PreferenceManager;
 
 import java.lang.reflect.Method;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private SeekBar seekBar;
     private TextView textView;
     private Button button;
     private CountDownTimer countDownTimer;
     private boolean isTimerOn;
     private MediaPlayer mediaPlayer;
+
     private int defaulInterval;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +43,14 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         isTimerOn = false;
         seekBar = findViewById(R.id.seekBar);
         textView = findViewById(R.id.textView);
         button = findViewById(R.id.button);
         seekBar.setMax(600);
-        seekBar.setProgress(59);
-        setIntervalFromSharedPreferences(PreferenceManager.getDefaultSharedPreferences(this));
+        setIntervalFromSharedPreferences(sharedPreferences);
+
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
@@ -92,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 resetTimer();
             }
         });
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
     private void setTimer(long progress) {
@@ -117,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         seekBar.setEnabled(true);
         isTimerOn = false;
         countDownTimer.cancel();
-        setIntervalFromSharedPreferences(PreferenceManager.getDefaultSharedPreferences(this));
+        setIntervalFromSharedPreferences(sharedPreferences);
     }
 
     @Override
@@ -148,8 +152,20 @@ public class MainActivity extends AppCompatActivity {
         return super.onMenuOpened(featureId, menu);
     }
     private void setIntervalFromSharedPreferences(SharedPreferences sharedPreferences){
-        defaulInterval =Integer.valueOf(sharedPreferences.getString("default_interval","30")) ;
+        defaulInterval = Integer.valueOf(sharedPreferences.getString("default_interval", "30"));
         textView.setText("00:"+defaulInterval);
         seekBar.setProgress(defaulInterval);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
+        if(key.equals("default_interval"));
+        setIntervalFromSharedPreferences(sharedPreferences);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
     }
 }
