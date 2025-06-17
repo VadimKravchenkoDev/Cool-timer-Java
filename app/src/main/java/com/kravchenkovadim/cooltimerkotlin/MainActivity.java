@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private boolean isTimerOn;
     private MediaPlayer mediaPlayer;
+    private int defaulInterval;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         button = findViewById(R.id.button);
         seekBar.setMax(600);
         seekBar.setProgress(59);
-
+        setIntervalFromSharedPreferences(PreferenceManager.getDefaultSharedPreferences(this));
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
@@ -114,10 +115,9 @@ public class MainActivity extends AppCompatActivity {
     private void resetTimer() {
         button.setText("START");
         seekBar.setEnabled(true);
-        seekBar.setProgress(59);
-        textView.setText("00:59");
         isTimerOn = false;
         countDownTimer.cancel();
+        setIntervalFromSharedPreferences(PreferenceManager.getDefaultSharedPreferences(this));
     }
 
     @Override
@@ -146,5 +146,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return super.onMenuOpened(featureId, menu);
+    }
+    private void setIntervalFromSharedPreferences(SharedPreferences sharedPreferences){
+        defaulInterval =Integer.valueOf(sharedPreferences.getString("default_interval","30")) ;
+        textView.setText("00:"+defaulInterval);
+        seekBar.setProgress(defaulInterval);
     }
 }

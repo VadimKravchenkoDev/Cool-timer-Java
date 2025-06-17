@@ -20,6 +20,6 @@
         android:defaultValue="30"
         />
 
-    
+
 
 </androidx.preference.PreferenceScreen>
