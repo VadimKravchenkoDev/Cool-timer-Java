@@ -159,8 +159,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
-        if(key.equals("default_interval"));
-        setIntervalFromSharedPreferences(sharedPreferences);
+        if(key.equals("default_interval")) {
+            setIntervalFromSharedPreferences(sharedPreferences);
+        }
     }
 
     @Override
