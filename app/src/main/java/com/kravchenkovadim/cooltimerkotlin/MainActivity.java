@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -152,7 +153,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         return super.onMenuOpened(featureId, menu);
     }
     private void setIntervalFromSharedPreferences(SharedPreferences sharedPreferences){
-        defaulInterval = Integer.valueOf(sharedPreferences.getString("default_interval", "30"));
+        try{
+            defaulInterval = Integer.valueOf(sharedPreferences.getString("default_interval", "30"));
+        } catch (Exception e){
+            Toast.makeText(this, "Problem with settings", Toast.LENGTH_LONG).show();
+        }
+
+
         textView.setText("00:"+defaulInterval);
         seekBar.setProgress(defaulInterval);
     }
