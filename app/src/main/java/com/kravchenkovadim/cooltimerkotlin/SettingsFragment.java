@@ -2,15 +2,20 @@ package com.kravchenkovadim.cooltimerkotlin;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import java.util.Objects;
+import java.util.prefs.PreferenceChangeEvent;
+import java.util.prefs.PreferenceChangeListener;
 
-public class SettingsFragment  extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsFragment  extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceChangeListener {
     @Override
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
@@ -29,6 +34,9 @@ public class SettingsFragment  extends PreferenceFragmentCompat implements Share
                 editTextPreference.setSummary(value);
             }
         }
+        //Preference preferenceEditTime = findPreference("");
+        assert editTextPreference != null;
+        editTextPreference.setOnPreferenceChangeListener(this);
     }
 
     private void updateListPreferenceSummary(ListPreference soundPref) {
@@ -69,11 +77,26 @@ public class SettingsFragment  extends PreferenceFragmentCompat implements Share
             if(editTextPreference!=null){
                 String value = editTextPreference.getText();
                 if(value == null || value.isEmpty()){
-                    editTextPreference.setSummary("Введіть секунди");
+                    editTextPreference.setSummary("Input seconds");
                 } else {
                     editTextPreference.setSummary(value);
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
+        if(preference.getKey().equals("default_interval")){
+            Toast toast = Toast.makeText(getContext(),"Please enter integer", Toast.LENGTH_LONG);
+            String defaultString = (String) newValue;
+            try {
+                int defaultInterval = Integer.parseInt(defaultString);
+            } catch (NumberFormatException numberFormatException){
+                toast.show();
+            }
+        }
+
+        return false;
     }
 }

@@ -157,16 +157,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     private void setIntervalFromSharedPreferences(SharedPreferences sharedPreferences) {
-        try {
-            defaulInterval = Integer.valueOf(sharedPreferences.getString("default_interval", "30"));
-            int i = 3 / 0;
-        } catch (NumberFormatException numberFormatException) {
-            Toast.makeText(this, "Problem with settings", Toast.LENGTH_LONG).show();
-        } catch (Exception e) {
-            Toast.makeText(this, "Some problem with code", Toast.LENGTH_LONG).show();
-        }
-
-
+        defaulInterval = Integer.valueOf(sharedPreferences.getString("default_interval", "30"));
         textView.setText("00:" + defaulInterval);
         seekBar.setProgress(defaulInterval);
     }
