@@ -58,9 +58,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 progress = progress * 1000;
                 setTimer(progress);
             }
+
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
             }
+
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
@@ -83,8 +85,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         boolean isChecked = prefs.getBoolean("sound", false);
                         String sound = prefs.getString("melody", "bell");
-                        int resId = getResources().getIdentifier(sound, "raw",getPackageName());
-                        if(isChecked){
+                        int resId = getResources().getIdentifier(sound, "raw", getPackageName());
+                        if (isChecked) {
 
                             mediaPlayer = MediaPlayer.create(getApplicationContext(), resId);
                             mediaPlayer.start();
@@ -127,18 +129,19 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_settings,menu);
+        getMenuInflater().inflate(R.menu.menu_settings, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId()==R.id.menu_settings){
+        if (item.getItemId() == R.id.menu_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public boolean onMenuOpened(int featureId, Menu menu) {
         if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
@@ -152,21 +155,25 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
         return super.onMenuOpened(featureId, menu);
     }
-    private void setIntervalFromSharedPreferences(SharedPreferences sharedPreferences){
-        try{
+
+    private void setIntervalFromSharedPreferences(SharedPreferences sharedPreferences) {
+        try {
             defaulInterval = Integer.valueOf(sharedPreferences.getString("default_interval", "30"));
-        } catch (Exception e){
+            int i = 3 / 0;
+        } catch (NumberFormatException numberFormatException) {
             Toast.makeText(this, "Problem with settings", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Some problem with code", Toast.LENGTH_LONG).show();
         }
 
 
-        textView.setText("00:"+defaulInterval);
+        textView.setText("00:" + defaulInterval);
         seekBar.setProgress(defaulInterval);
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
-        if(key.equals("default_interval")) {
+        if (key.equals("default_interval")) {
             setIntervalFromSharedPreferences(sharedPreferences);
         }
     }
